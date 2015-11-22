@@ -248,7 +248,7 @@ public class Skill extends Stringeable {
         //TODO this probably shouldn't add itself to the database.
         //To fix this, you need to make sure that everywhere new Skill(...) is called it also adds
         //it to the database. this doens't happen too many times in the actual app, but lots in tests.
-        db.addSkill(this);
+        CDatabaseController.addSkill(this);
     }
 
     Skill(UserDatabase db, Skill skill) {
@@ -263,7 +263,7 @@ public class Skill extends Stringeable {
         //TODO this probably shouldn't add itself to the database.
         //To fix this, you need to make sure that everywhere new Skill(...) is called it also adds
         //it to the database. this doens't happen too many times in the actual app, but lots in tests.
-        db.addSkill(this);
+        CDatabaseController.addSkill(this);
     }
 
     /**
@@ -350,7 +350,7 @@ public class Skill extends Stringeable {
                 //if removed skill from inventory and no other owners had skill
                 Log.d("GGGGGGGGEEEEEEEEEETTTT", "HEEEEEERRRRRRRR");
                 userDB.getSkills().remove(prev_version);
-                userDB.deleteDocumentSkill(skillID.toString());
+                CDatabaseController.deleteDocumentSkill(skillID.toString());
 
             } else if (prev_version.isOwner(owner) && !isOwner(owner)) {
                 //if removed skill from inventory and other owners had skill

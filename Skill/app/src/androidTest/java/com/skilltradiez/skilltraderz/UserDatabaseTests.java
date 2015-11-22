@@ -30,8 +30,8 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testCreateAccount() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         User user;
 
         try {
@@ -43,8 +43,8 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testCreateAccountFailCase() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         User user;
 
         try {
@@ -62,8 +62,8 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testLogin() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         User user;
 
         try {
@@ -77,11 +77,11 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testDatabasePersistence() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         try {
             User user = db.createUser("Username");
-            db.save();
+            CDatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();
@@ -92,15 +92,15 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testTradelistPersistence() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         try {
             User user1 = db.createUser("Username1"),
                     user2 = db.createUser("Username2");
 
             TradeList tl = user1.getTradeList();
             tl.createTrade(db, user1, user2, new ArrayList<Skill>());
-            db.save();
+            CDatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();
@@ -115,14 +115,14 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testFriendListPersistence() {
-        UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        UserDatabase db = MasterController.getUserDB();
+        CDatabaseController.deleteAllData();
         try {
             User user1 = db.createUser("Username1"),
                     user2 = db.createUser("Username2");
 
             user1.getFriendsList().addFriend(user2);
-            db.save();
+            CDatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();

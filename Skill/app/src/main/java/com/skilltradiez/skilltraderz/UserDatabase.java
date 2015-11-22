@@ -146,7 +146,7 @@ public class UserDatabase {
         LocalPersistentObject lpo = local.getLocalData();
         if (lpo != null) {
             if (lpo.getCurrentUser() != null) {
-                setCurrentUser(lpo.getCurrentUser());
+                MasterController.getUserDB().setCurrentUser(lpo.getCurrentUser());
             } else {
                 currentUser = null;
             }
@@ -159,224 +159,36 @@ public class UserDatabase {
         }
     }
 
-    public User createUser(String username) throws UserAlreadyExistsException {
-        if (getAccountByUsername(username) != null)
-            throw new UserAlreadyExistsException();
 
-        User u = new User(username);
-        users.add(u);
-        // You wouldn't be creating a user if you already had one
-        setCurrentUser(u);
-        try {
-            elastic.addDocument("user", username, u);
-        } catch (IOException e) {
-            // No internet, no registration
-            throw new RuntimeException();
-        }
-        return u;
-    }
-
-    public User login(String username) {
-        User u = getAccountByUsername(username);
-        setCurrentUser(u);
-        return u;
-    }
-
-    public void deleteAllData() {
-        try {
-            elastic.deleteDocument("example", "");
-            elastic.deleteDocument("user", "");
-            elastic.deleteDocument("skill", "");
-            elastic.deleteDocument("trade", "");
-            local.deleteFile();
-            currentUser = null;
-            users.clear();
-            skillz.clear();
-            trades.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteDocumentUser(User user) {
-        deleteDocumentUser(user.getUserID().toString());
-    }
-
-    public void deleteDocumentSkill(Skill skill) {
-        deleteDocumentSkill(skill.getSkillID().toString());
-    }
-
-    public void deleteDocumentTrade(Trade trade) {
-        deleteDocumentTrade(trade.getTradeID().toString());
-    }
-
-    public void deleteDocumentUser(String userID) {
-        try {
-            elastic.deleteDocument("user", userID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteDocumentSkill(String skillID) {
-        try {
-            elastic.deleteDocument("skill", skillID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteDocumentTrade(String tradeID) {
-        try {
-            elastic.deleteDocument("trade", tradeID);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public boolean isLoggedIn() {
-        return currentUser != null;
-    }
-
-    /**
-     * Downloads all online data into a local cache
-     * TODO: save must be done before this or we might lose data
+    /** Model here only has the simple getter/setter methods that allow the controller to function
+     * without some insane level of complexity.
+     *
+     * All of those huge functions from before were just outright modified and put into the
+     * controller itself. Those don't belong in a true model class following MVC.
      */
-    public void refresh() {
-        try {
-            List<User> onlineUsers = elastic.getAllUsers();
-            for (User u : onlineUsers) {
-                if (u.equals(currentUser)) setCurrentUser(u);
-                users.remove(u);
-                users.add(u);
-            }
-            //TODO CATCH IOExceptions
-            List<Skill> skills = elastic.getAllSkills();
-            for (Skill s : skills) {
-                skillz.remove(s);
-                skillz.add(s);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public void setCurrentUserToNull(){ currentUser = null; }
 
-    /**
-     * TODO saving should merge, not overwrite.
-     */
-    public void save() {
-        toBePushed.push(this);
-        // TODO: Saves locally and pushes changes if connected to the internet
-        //local.saveToFile(currentUser, users, skillz, trades, toBePushed.getNotifications());
-        local.saveToFile(currentUser, users, skillz, trades);
-    }
+    public Set<Skill> getSkillz(){ return skillz; }
 
-    public ChangeList getChangeList() {
-        return toBePushed;
-    }
+    public ChangeList getChangeList() { return toBePushed; }
 
-    /*
-     * The internet API
-     */
-    public Elastic getElastic() {
-        return elastic;
-    }
+    public Elastic getElastic() { return elastic; }
 
-    /*
-     * The Local API
-     */
-    public Local getLocal() {
-        return local;
-    }
+    public Local getLocal() { return local; }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
+    public User getCurrentUser() { return currentUser; }
 
-    public User getAccountByUsername(String username) {
-        for (User u : users)
-            if (u.getProfile().getUsername().equals(username))
-                return u;
-        return getOnlineAccountByUsername(username);
-    }
+    public Set<User> getUsers() { return users; }
 
-    private User getOnlineAccountByUsername(String username) {
-        //TODO Maybe this should throw an exception instead of returning null.
-        User u = null;
-        try {
-            //System.out.println(username);
-            u = elastic.getDocumentUser(username);
-            if (u != null) users.add(u);
-        } catch (IOException e) {
-        }
-        return u;
-    }
+    public Set<Skill> getSkills() { return skillz; }
 
-    public User getAccountByUserID(ID id) {
-        for (User u : users)
-            if (u.getUserID().equals(id))
-                return u;
-        return null;
-    }
+    public Set<Trade> getTrades() { return trades;}
 
-    public Trade getTradeByID(ID id) {
-        for (Trade t : trades)
-            if (t.getTradeID().equals(id))
-                return t;
-        return getOnlineTradeByID(id);
-    }
+    public void setCurrentUserVal(User currentUserFromFn) { this.currentUser = currentUserFromFn;}
 
-    private Trade getOnlineTradeByID(ID id) {
-        Trade t = null;
-        try {
-            t = elastic.getDocumentTrade(id.toString());
-            if (t != null)
-                trades.add(t);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return t;
-    }
 
-    public Skill getSkillByID(ID id) {
-        for (Skill s : skillz)
-            if (s.getSkillID().equals(id))
-                return s;
-        return getOnlineSkillByID(id);
-    }
 
-    private Skill getOnlineSkillByID(ID id) {
-        Skill s = null;
-        try {
-            s = elastic.getDocumentSkill(id.toString());
-            if (s != null) skillz.add(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
-    public void addSkill(Skill s) {
-        skillz.add(s);
-        // New Skill
-        getChangeList().add(s);
-        try {
-            //TODO: Seems to be a problem for no apparent reason (Maybe the Network in UI Issue?)
-            getElastic().addDocument("skill", s.getSkillID().toString(), s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void addTrade(Trade t) {
-        trades.add(t);
-        // New Trade
-        getChangeList().add(t);
-        try {
-            getElastic().addDocument("trade", t.getTradeID().toString(), t);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
@@ -386,15 +198,4 @@ public class UserDatabase {
         getChangeList().add(currentUser.getInventory());
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public Set<Skill> getSkills() {
-        return skillz;
-    }
-
-    public Set<Trade> getTrades() {
-        return trades;
-    }
 }

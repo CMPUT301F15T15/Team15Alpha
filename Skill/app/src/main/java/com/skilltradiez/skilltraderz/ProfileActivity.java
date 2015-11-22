@@ -221,7 +221,7 @@ public class ProfileActivity extends GeneralMenuActivity {
         //Function call to the master controller to deal with all this!
         masterController.addANewFriend(currentUser);
 
-        masterController.save();
+        CDatabaseController.save();
 
         //Toasties!
         Context context = getApplicationContext();
@@ -238,7 +238,7 @@ public class ProfileActivity extends GeneralMenuActivity {
     public void removeFriend(){
         masterController.removeThisFriend(currentUser);
 
-        masterController.save();
+        CDatabaseController.save();
 
         //Toasties!!!!!!
         Context context = getApplicationContext();

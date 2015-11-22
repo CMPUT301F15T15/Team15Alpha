@@ -114,13 +114,13 @@ public class MainActivity extends GeneralMenuActivity {
         super.onCreate(savedInstanceState);
 
         masterController = new MasterController();
-        masterController.initDB();
+        masterController.initializeController();
 
         //TODO HACK
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if (masterController.isLoggedIn()) {
+        if (CDatabaseController.isLoggedIn()) {
             setContentView(R.layout.activity_main);
         } else {
             setContentView(R.layout.first_time_user);
@@ -189,8 +189,8 @@ public class MainActivity extends GeneralMenuActivity {
 
             //Used for error checking
             // If null, then it failed
-            new_guy = masterController.createNewUser(username,newUserEmail.getText().toString());
-            masterController.save();
+            new_guy = CDatabaseController.createNewUser(username, newUserEmail.getText().toString());
+            CDatabaseController.save();
 
 /*            try {
                 new_guy = userDB.createUser(username);
@@ -270,7 +270,7 @@ public class MainActivity extends GeneralMenuActivity {
     }
 
     public void deleteDatabase(View view) {
-        masterController.crazyDatabaseDeletion();
+        CDatabaseController.deleteAllData();
         Toast.makeText(getApplicationContext(), "Complete online database has been deleted!!!!", Toast.LENGTH_SHORT).show();
     }
 

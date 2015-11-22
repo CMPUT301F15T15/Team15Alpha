@@ -82,7 +82,7 @@ public class SkillDescriptionActivity extends GeneralMenuActivity {
         setContentView(R.layout.activity_skill_description);
         masterController = new MasterController();
 
-        currentSkill = masterController.getSkillByID((ID) getIntent().getExtras().get("skill_id"));
+        currentSkill = CDatabaseController.getSkillByID((ID) getIntent().getExtras().get("skill_id"));
 
         addRemoveSkill = (Button) findViewById(R.id.add_remove_skill);
         skillDescription = (TextView) findViewById(R.id.skill_description);
@@ -139,7 +139,7 @@ public class SkillDescriptionActivity extends GeneralMenuActivity {
             masterController.addCurrentSkill(currentSkill);
         }
         hasSkill = !hasSkill;
-        masterController.save();
+        CDatabaseController.save();
     }
 
     public Button getAddRemoveSkill(){

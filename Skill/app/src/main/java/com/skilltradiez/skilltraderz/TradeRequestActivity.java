@@ -197,7 +197,7 @@ public class TradeRequestActivity extends GeneralMenuActivity {
     public void setTradeTitle(){
         //tradeTitle = who you're trading with
         UserDatabase db = masterController.getUserDB();
-        User otherUser = db.getAccountByUserID(trade.getOppositeHalf(db.getCurrentUser()).getUser());
+        User otherUser = CDatabaseController.getAccountByUserID(trade.getOppositeHalf(db.getCurrentUser()).getUser());
         tradeTitle.setText(otherUser.getProfile().getUsername());
     }
 }

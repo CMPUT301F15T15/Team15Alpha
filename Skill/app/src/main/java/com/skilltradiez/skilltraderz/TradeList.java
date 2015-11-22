@@ -110,7 +110,7 @@ public class TradeList extends Notification {
             return;
         trades.add(trade.getTradeID());
         newTrades.add(trade.getTradeID());
-        db.addTrade(trade);
+        CDatabaseController.addTrade(trade);
         notifyDB();
     }
 
@@ -119,7 +119,7 @@ public class TradeList extends Notification {
         Trade trade;
 
         for (ID t : trades) {
-            trade = userDB.getTradeByID(t);
+            trade = CDatabaseController.getTradeByID(t);
             if (trade.isActive())
                 activeTrades.add(trade);
         }
@@ -135,19 +135,19 @@ public class TradeList extends Notification {
 
     public Trade getMostRecentTrade(UserDatabase userDB) {
         if (trades.isEmpty()) return null;
-        return userDB.getTradeByID(trades.get(trades.size()-1));
+        return CDatabaseController.getTradeByID(trades.get(trades.size()-1));
     }
 
     @Override
     public boolean commit(UserDatabase userDB) {
         for (ID tradeId : newTrades) {
-            Trade trade = userDB.getTradeByID(tradeId);
-            User otherUser = userDB.getAccountByUserID(trade.getHalf2().getUser());
-            User theUser = userDB.getAccountByUserID(getOwnerID());
+            Trade trade = CDatabaseController.getTradeByID(tradeId);
+            User otherUser = CDatabaseController.getAccountByUserID(trade.getHalf2().getUser());
+            User theUser = CDatabaseController.getAccountByUserID(getOwnerID());
             otherUser.getTradeList().addTrade(userDB, trade);
             try {
-                userDB.getElastic().updateDocument("user", otherUser.getProfile().getUsername(), otherUser.getTradeList(), "tradeList");
-                userDB.getElastic().updateDocument("user", theUser.getProfile().getUsername(), theUser.getTradeList(), "tradeList");
+                MasterController.getUserDB().getElastic().updateDocument("user", otherUser.getProfile().getUsername(), otherUser.getTradeList(), "tradeList");
+                MasterController.getUserDB().getElastic().updateDocument("user", theUser.getProfile().getUsername(), theUser.getTradeList(), "tradeList");
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;

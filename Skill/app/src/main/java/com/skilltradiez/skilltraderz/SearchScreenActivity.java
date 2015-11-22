@@ -176,7 +176,7 @@ public class SearchScreenActivity extends GeneralMenuActivity {
 
     public void loadItems() {
         //Refresh the database :D
-        masterController.refreshDB();
+        CDatabaseController.refresh();
         items.clear();
         refineSearch(null); // search for nothing initially
 
