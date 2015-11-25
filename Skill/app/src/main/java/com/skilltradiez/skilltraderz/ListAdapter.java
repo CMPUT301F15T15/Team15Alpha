@@ -28,7 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Stephen on 2015-11-07.
+ * List adapter is going to be a subclass if the stringable superclass, where the core purpose
+ * of this class is to grant us a constructor and various methods for dealing with viewing the
+ * data presented. This is achieved by handing this class a particular activity of interest and a
+ * list of potential items to be processed by this list.
+ *
+ * When used, this class will be allowing us to obtain view details to be used in displaying
+ * the information on the given activity through it's two methods.
  */
 public class ListAdapter extends ArrayAdapter<Stringeable> {
     private final Activity context;

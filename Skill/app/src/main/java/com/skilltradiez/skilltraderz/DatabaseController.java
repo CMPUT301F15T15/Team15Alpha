@@ -21,8 +21,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Cole on 2015-11-22.
+/**~~TYPE: CONTROLLER
+ *
+ * DESCRPTION: Following MVC styling to the absolute core, this is taking out of the UserDatabase
+ * anything but the most bare minimal methods. We're maintaing the model as the model, and we're
+ * making all the other functionality be housed here.
+ *
+ * This area will take care of anything and everything the rest of the program may possibly want
+ * to do with the database.
  */
 public final class DatabaseController implements ControllerInterface{
     private static UserDatabase userDB;

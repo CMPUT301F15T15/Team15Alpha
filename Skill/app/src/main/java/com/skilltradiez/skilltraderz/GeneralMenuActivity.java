@@ -26,6 +26,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+/**
+ * DESCRPTION: This activity is going to be the core menu page for our entire application, following
+ * MVC styling and the conceptual idea of an OO-Knife scraping off the UI we have made it so
+ * that all functionality located here is going to be involved in the controller and model classes.
+ *
+ * However that being said this activity class contains all of the essential UI aspect of the
+ * program which allows us to actually have a functioning interactive application!
+ *
+ * One CRITICAL function though is that this is actually going to be involved in creating
+ * THE master controller for the application. Please refer to that class to see more information
+ * on it- but it is of paramount importance that this is created ahead of time!
+ */
 public class GeneralMenuActivity extends ActionBarActivity {
 
     private Context generalContext = this;

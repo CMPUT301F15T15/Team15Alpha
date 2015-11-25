@@ -98,10 +98,6 @@ import java.util.Collection;
 
 
 
-
-/**
- * Created by Falon3 on 2015-11-04.
- */
 public class Local {
     LocalPersistentObject save_object = null;
     private static final String SAVE_FILE = "/sdcard/save_file.sav";

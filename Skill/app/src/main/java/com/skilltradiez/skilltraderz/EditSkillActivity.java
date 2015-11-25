@@ -32,7 +32,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-/**~~DESCRIPTION:
+/**~~TYPE: MODEL + CONTROLLER
+ *
+ * ~~DESCRIPTION:
  * Our application is based off of the notion of facilitating the entire process of one user
  * being able to offer another user a skill. They make a trade from one user to another user
  * through our application.

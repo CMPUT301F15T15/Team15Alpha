@@ -21,7 +21,18 @@ package com.skilltradiez.skilltraderz;
 import java.util.List;
 
 /**
- * Created by nweninge on 11/6/15.
+ * DESCRPTION: This class is extremely similar to the UserSearchResponse class where this
+ * is going to be handling a lot of the parsing of information from elastic and providing us
+ * with access to this information.
+ *
+ * Please note: There are 3 smaller classes located within this SkillSearchResponse class,
+ * relating to different parameters.
+ *
+ * The main purpose of Hits is to make is to that we can have a total and max score values being
+ * maintained throughout the application.
+ *
+ * The purpose of Hit (NOT to be confused with "Hit"!) is so that we can basically parse more
+ * elasticsearch meta data. The only parameter we really care about here though is source for now.
  */
 public class SkillSearchResponse {
     private int took;

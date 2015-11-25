@@ -20,7 +20,17 @@ package com.skilltradiez.skilltraderz;
 import java.util.List;
 
 /**
- * Created by nweninge on 11/6/15.
+ * DESCRIPTION: When a user is going to utilize a search we are going to want to have some sort
+ * of reply back to the application, this class is purely dedicated to achieving the amount of
+ * total, successful and failed attempts.
+ *
+ * This is tightly bound to the elastic search class. But there is a twist, this may be a
+ * class called UserSearchResponse-- but it has two miniature classes located within itself. This
+ * is going to be the Hits and hit class-- these are going to be useful in picking apart particular
+ * returns from the elasticsearch database as the user searches.
+ *
+ * This can be useful in telling us how many times the search was done, whether it worked or failed.
+ *
  */
 public class UserSearchResponse {
     private int took;
