@@ -30,10 +30,10 @@ public class UserInventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testAddSkill() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         User owner = null;
         try {
-            owner = db.createUser("Billy");
+            owner = DatabaseController.createUser("Billy");
         } catch (UserAlreadyExistsException e) {
             // can't happen
         }
@@ -48,10 +48,10 @@ public class UserInventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testRemoveSkill() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         User owner = null;
         try {
-            owner = db.createUser("Billy");
+            owner = DatabaseController.createUser("Billy");
         } catch (UserAlreadyExistsException e) {
             // can't happen
         }
@@ -67,10 +67,10 @@ public class UserInventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testSetSkillProperties() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         User owner = null;
         try {
-            owner = db.createUser("Billy");
+            owner = DatabaseController.createUser("Billy");
         } catch (UserAlreadyExistsException e) {
             // can't happen
         }
@@ -91,10 +91,10 @@ public class UserInventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testSkillSorting() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         User owner = null;
         try {
-            owner = db.createUser("Billy");
+            owner = DatabaseController.createUser("Billy");
         } catch (UserAlreadyExistsException e) {
             // can't happen
         }
@@ -114,10 +114,10 @@ public class UserInventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testSearchSkills() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         User owner = null;
         try {
-            owner = db.createUser("Billy");
+            owner = DatabaseController.createUser("Billy");
         } catch (UserAlreadyExistsException e) {
             // can't happen
         }

@@ -30,16 +30,16 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testInitTrade() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user = db.createUser("u");
-            User user2 = db.createUser("u2");
+            User user = DatabaseController.createUser("u");
+            User user2 = DatabaseController.createUser("u2");
             List<Skill> offer = new ArrayList<Skill>();
 
             offer.add(new Skill(db, "illlllll", "LLLLLLLLLLLLLLLL", "desc", true, new NullImage()));
 
             Trade trade = user.getTradeList().createTrade(db, user, user2, offer);
-            db.save();
+            DatabaseController.save();
             assertEquals(user.getTradeList().getMostRecentTrade(db), trade);
             assertEquals(user2.getTradeList().getMostRecentTrade(db), trade);
         } catch (UserAlreadyExistsException e) {
@@ -49,10 +49,10 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testAcceptTradeRequest() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user = db.createUser("u");
-            User user2 = db.createUser("u2");
+            User user = DatabaseController.createUser("u");
+            User user2 = DatabaseController.createUser("u2");
             List<Skill> offer = new ArrayList<Skill>();
 
             offer.add(new Skill(db, "illlllll", "LLLLLLLLLLLLLLLL", "desc", true, new NullImage()));
@@ -67,10 +67,10 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testRefuseTradeRequest() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user = db.createUser("u");
-            User user2 = db.createUser("u2");
+            User user = DatabaseController.createUser("u");
+            User user2 = DatabaseController.createUser("u2");
             List<Skill> offer = new ArrayList<Skill>();
 
             offer.add(new Skill(db, "illlllll", "LLLLLLLLLLLLLLLL", "desc", true, new NullImage()));
@@ -78,11 +78,11 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
             Trade trade = user.getTradeList().createTrade(db, user, user2, offer);
             // decline the trade
             trade.getHalfForUser(user2).setAccepted(false);
-            db.save();
+            DatabaseController.save();
             assertTrue(trade.isActive());
             // delete the trade
             user2.getTradeList().delete(user2.getTradeList().getMostRecentTrade(db));
-            db.save();
+            DatabaseController.save();
             assertTrue(user.getTradeList().getActiveTrades(db).size() == 0);
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
@@ -91,10 +91,10 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testCounterOfferTradeRequest() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user = db.createUser("u");
-            User user2 = db.createUser("u2");
+            User user = DatabaseController.createUser("u");
+            User user2 = DatabaseController.createUser("u2");
             List<Skill> offer = new ArrayList<Skill>();
             List<Skill> counterOffer = new ArrayList<Skill>();
 
@@ -116,10 +116,10 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testModifyActiveTrade() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User bob = db.createUser("Bob");
-            User joel = db.createUser("Joel");
+            User bob = DatabaseController.createUser("Bob");
+            User joel = DatabaseController.createUser("Joel");
 
             List<Skill> skillz1 = new ArrayList<Skill>(), skillz2 = new ArrayList<Skill>();
             skillz1.add(new Skill(db, "...YEP", "FOO", "desc", true, new NullImage()));
@@ -147,10 +147,10 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
 
     public void testBrowseTradeHistory() {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User bob = db.createUser("Bob");
-            User joel = db.createUser("Joel");
+            User bob = DatabaseController.createUser("Bob");
+            User joel = DatabaseController.createUser("Joel");
 
             List<Skill> skillz1 = new ArrayList<Skill>(), skillz2 = new ArrayList<Skill>();
             skillz1.add(new Skill(db, "...YEP", "BAR", "desc", true, new NullImage()));

@@ -61,6 +61,10 @@
             android:name=".GeneralMenuActivity"
             android:theme="@android:style/Theme.NoDisplay" >
         </activity>
+        <activity
+            android:name=".Hodor"
+            android:label="@string/title_activity_hodor" >
+        </activity>
     </application>
 
 </manifest>

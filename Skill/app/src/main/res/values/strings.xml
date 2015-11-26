@@ -110,4 +110,5 @@
         <item>Active</item>
         <item>Inactive</item>
     </string-array>
+    <string name="title_activity_hodor">Hodor</string>
 </resources>

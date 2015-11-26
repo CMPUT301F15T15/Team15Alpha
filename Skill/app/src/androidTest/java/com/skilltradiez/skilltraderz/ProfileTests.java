@@ -31,12 +31,12 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
     public void testSetUsername() {
         try {
             UserDatabase db = new UserDatabase();
-            db.deleteAllData();
-            db.createUser("Username");
-            db.save();
+            DatabaseController.deleteAllData();
+            DatabaseController.createUser("Username");
+            DatabaseController.save();
             // Make sure it persists
             db = new UserDatabase();
-            User user = db.login("Username");
+            User user = DatabaseController.login("Username");
             assertEquals(user.getProfile().getUsername(), "Username");
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
@@ -46,16 +46,16 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
     public void testSetLocation() {
         try {
             UserDatabase db = new UserDatabase();
-            db.deleteAllData();
-            User user = db.createUser("Username");
+            DatabaseController.deleteAllData();
+            User user = DatabaseController.createUser("Username");
             try {
                 user.getProfile().setLocation("Edmonton");
             } catch (IllegalArgumentException e) {
             }
-            db.save();
+            DatabaseController.save();
             // Make sure it persists
-            db = new UserDatabase();
-            user = db.login("Username");
+            //artificated garbage: db = new UserDatabase();
+            user = DatabaseController.login("Username");
             assertTrue(user.getProfile().getLocation().equals("Edmonton"));
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
@@ -65,16 +65,16 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
     public void testSetEmail() {
         try {
             UserDatabase db = new UserDatabase();
-            db.deleteAllData();
-            User user = db.createUser("Username");
+            DatabaseController.deleteAllData();
+            User user = DatabaseController.createUser("Username");
             try {
                 user.getProfile().setEmail("apersonsname@awebsite.com");
             } catch (IllegalArgumentException e) {
             }
-            db.save();
+            DatabaseController.save();
             // Make sure it persists
-            db = new UserDatabase();
-            user = db.login("Username");
+            //antiquidated garbage: db = new UserDatabase();
+            user = DatabaseController.login("Username");
             assertEquals(user.getProfile().getEmail(), "apersonsname@awebsite.com");
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
@@ -84,15 +84,15 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
     public void testFieldsTooLong() {
         try {
             UserDatabase db = new UserDatabase();
-            db.deleteAllData();
-            User user = db.createUser("Username");
+            DatabaseController.deleteAllData();
+            User user = DatabaseController.createUser("Username");
             try {
                 user.getProfile().setEmail("apersonsname@awebsite.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahahahahhahahahahahhahahahahahaha");
                 assertTrue(false); // if we got here, the exception didn't happen
             } catch (IllegalArgumentException e) {
             }
             try {
-                user = db.createUser("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahahahahhahahahahahhahahahahahaha");
+                user = DatabaseController.createUser("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahahahahhahahahahahhahahahahahaha");
                 assertTrue(false); // if we got here, the exception didn't happen
             } catch (IllegalArgumentException e) {
             }
@@ -108,8 +108,8 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
 
     public void testAvatar() throws UserAlreadyExistsException {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
-        User user = db.createUser("Username");
+        DatabaseController.deleteAllData();
+        User user = DatabaseController.createUser("Username");
         Image avatar = new Image("hello.jpeg");
         Image avatar2 = new Image("hello.jpg");
 
@@ -133,14 +133,14 @@ public class ProfileTests extends ActivityInstrumentationTestCase2 {
     public void testSetDownloadImages() {
         try {
             UserDatabase db = new UserDatabase();
-            db.deleteAllData();
-            User user = db.createUser("Username");
+            DatabaseController.deleteAllData();
+            User user = DatabaseController.createUser("Username");
 
             user.getProfile().setShouldDownloadImages(true);
-            db.save();
+            DatabaseController.save();
             // Make sure it persists
-            db = new UserDatabase();
-            user = db.login("Username");
+            //antiquidated garbage: b = new UserDatabase();
+            user = DatabaseController.login("Username");
             assertTrue(user.getProfile().getShouldDownloadImages());
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);

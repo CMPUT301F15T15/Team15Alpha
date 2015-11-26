@@ -31,30 +31,30 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
 
     public void testCreateAccount() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         User user;
 
         try {
-            user = db.createUser("Username");
+            user = DatabaseController.createUser("Username");
 
-            assertEquals(db.getAccountByUsername("Username"), user);
+            assertEquals(DatabaseController.getAccountByUsername("Username"), user);
         } catch (UserAlreadyExistsException e) {
         }
     }
 
     public void testCreateAccountFailCase() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         User user;
 
         try {
-            user = db.createUser("Username");
+            user = DatabaseController.createUser("Username");
         } catch (UserAlreadyExistsException e) {
 
         }
 
         try {
-            User user2 = db.createUser("Username");
+            User user2 = DatabaseController.createUser("Username");
             assertTrue(false);
         } catch (UserAlreadyExistsException e) {
             assertTrue(true);
@@ -63,29 +63,29 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
 
     public void testLogin() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         User user;
 
         try {
-            user = db.createUser("Username");
+            user = DatabaseController.createUser("Username");
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
 
         }
 
-        assertTrue(db.login("Username") != null);
+        assertTrue(DatabaseController.login("Username") != null);
     }
 
     public void testDatabasePersistence() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user = db.createUser("Username");
-            CDatabaseController.save();
+            User user = DatabaseController.createUser("Username");
+            DatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();
-            assertTrue(db.getAccountByUsername("Username").equals(user));
+            assertTrue(DatabaseController.getAccountByUsername("Username").equals(user));
         } catch (UserAlreadyExistsException e) {
             assertTrue(false);
         }
@@ -93,19 +93,19 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
 
     public void testTradelistPersistence() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user1 = db.createUser("Username1"),
-                    user2 = db.createUser("Username2");
+            User user1 = DatabaseController.createUser("Username1"),
+                    user2 = DatabaseController.createUser("Username2");
 
             TradeList tl = user1.getTradeList();
             tl.createTrade(db, user1, user2, new ArrayList<Skill>());
-            CDatabaseController.save();
+            DatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();
-            user1 = db.getAccountByUsername("Username1");
-            user2 = db.getAccountByUsername("Username2");
+            user1 = DatabaseController.getAccountByUsername("Username1");
+            user2 = DatabaseController.getAccountByUsername("Username2");
 
             tl = user1.getTradeList();
             assertEquals(tl.getMostRecentTrade(db).getHalfForUser(user2).getUser(), user2.getUserID());
@@ -116,18 +116,18 @@ public class UserDatabaseTests extends ActivityInstrumentationTestCase2 {
 
     public void testFriendListPersistence() {
         UserDatabase db = MasterController.getUserDB();
-        CDatabaseController.deleteAllData();
+        DatabaseController.deleteAllData();
         try {
-            User user1 = db.createUser("Username1"),
-                    user2 = db.createUser("Username2");
+            User user1 = DatabaseController.createUser("Username1"),
+                    user2 = DatabaseController.createUser("Username2");
 
             user1.getFriendsList().addFriend(user2);
-            CDatabaseController.save();
+            DatabaseController.save();
 
             // The new database should contain all the previous changes
             db = new UserDatabase();
-            user1 = db.getAccountByUsername("Username1");
-            user2 = db.getAccountByUsername("Username2");
+            user1 = DatabaseController.getAccountByUsername("Username1");
+            user2 = DatabaseController.getAccountByUsername("Username2");
 
             assertTrue(user1.getFriendsList().hasFriend(user2));
             assertTrue(user2.getFriendsList().hasFriend(user1));

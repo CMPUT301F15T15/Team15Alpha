@@ -51,6 +51,8 @@ import java.util.Set;
  * interelated with the main primary goal of allowing us to have a screen where we search the
  * actual screen of activities.
  *
+ * Categories are located within the strings.xml file! They are NOT in a class! They are in xml!
+ *
  *~~CONSTRUCTOR:
  * Upon calling the method onCreate() for this activity the android studio framework will
  * cause the android application to create an instance of this actvity and display it to the user.

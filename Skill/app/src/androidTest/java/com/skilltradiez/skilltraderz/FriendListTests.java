@@ -28,31 +28,31 @@ public class FriendListTests extends ActivityInstrumentationTestCase2 {
 
     public void testAddFriend() throws UserAlreadyExistsException {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
 
-        User user1 = db.createUser("user1");
-        User user2 = db.createUser("user2");
+        User user1 = DatabaseController.createUser("user1");
+        User user2 = DatabaseController.createUser("user2");
 
         user1.getFriendsList().addFriend(user2);
-        db.save();
+        DatabaseController.save();
         assertTrue(user1.getFriendsList().hasFriend(user2));
         assertTrue(user2.getFriendsList().hasFriend(user1));
     }
 
     public void testRemoveFriend() throws UserAlreadyExistsException {
         UserDatabase db = new UserDatabase();
-        db.deleteAllData();
+        DatabaseController.deleteAllData();
 
-        User user1 = db.createUser("user1");
-        User user2 = db.createUser("user2");
+        User user1 = DatabaseController.createUser("user1");
+        User user2 = DatabaseController.createUser("user2");
 
         user1.getFriendsList().addFriend(user2);
-        db.save();
+        DatabaseController.save();
         assertTrue(user1.getFriendsList().hasFriend(user2));
         assertTrue(user2.getFriendsList().hasFriend(user1));
 
         user1.getFriendsList().removeFriend(user2);
-        db.save();
+        DatabaseController.save();
         assertFalse(user1.getFriendsList().hasFriend(user2));
         assertFalse(user2.getFriendsList().hasFriend(user1));
     }

@@ -56,12 +56,12 @@ public class EspressoTest {
 
     @Before
     public void deleteDatabase(){
-        new MasterController().crazyDatabaseDeletion();
+        DatabaseController.deleteAllData();
     }
 
     @After
     public void deleteDatabaseAgain() {
-        new MasterController().crazyDatabaseDeletion();
+        DatabaseController.deleteAllData();
     }
 
     @Test
@@ -88,7 +88,7 @@ public class EspressoTest {
         // set skill properties
         onView(withId(R.id.new_skill_name)).perform(typeText("Sname"), closeSoftKeyboard());
         onView(withId(R.id.new_skill_description)).perform(typeText("Sdesc"), closeSoftKeyboard());
-        onView(withId(R.id.new_category)).perform(typeText("Scate"), closeSoftKeyboard());
+        //onView(withId(R.id.new_category)).perform(typeText("Scate"), closeSoftKeyboard());
         // Set visibility
         //onView(withId(R.id.is_visible)).perform(click());
 
@@ -130,7 +130,7 @@ public class EspressoTest {
     // Friends.AddFriend
     public void testAddFriend() {
         //create friend
-        new MasterController().createNewUser("Friend", "fri@end.ly");
+        DatabaseController.createNewUser("Friend", "fri@end.ly");
 
         //login
         onView(withId(R.id.usernameField)).perform(typeText("Elyse"), closeSoftKeyboard());

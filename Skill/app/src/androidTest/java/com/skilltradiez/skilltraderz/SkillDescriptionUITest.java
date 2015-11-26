@@ -39,9 +39,11 @@ public class SkillDescriptionUITest extends ActivityInstrumentationTestCase2 {
 
     public void testAddRemoveSkill() throws Exception {
         MasterController mc = new MasterController();
-        mc.initDB();
-        mc.crazyDatabaseDeletion();
-        mc.createNewUser("User", "Email");
+        mc.initializeController();
+
+        DatabaseController.deleteAllData();
+
+        DatabaseController.createNewUser("User", "Email");
         mc.makeNewSkill("Skill1Test", "testing", "see if can add new skill", true, new NullImage());
         Skill skill = ((Skill)(mc.getAllSkillz().toArray()[0]));
         // see if skill added
