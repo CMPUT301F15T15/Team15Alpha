@@ -34,7 +34,7 @@
     <string name="offering">Offer:</string>
     <string name="requesting">Request:</string>
     <string name="offer_inv">Your Inventory:</string>
-    <string name="request_inv">Other Guy's Inventory:</string>
+    <string name="request_inv">Other Guy\'s Inventory:</string>
     <string name="accept_trade">Accept Trade</string>
     <string name="send_trade">Send Trade</string>
     <string name="counter_trade">Counter Offer</string>

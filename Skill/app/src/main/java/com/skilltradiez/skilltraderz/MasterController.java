@@ -131,4 +131,5 @@ public final class MasterController implements ControllerInterface{
     public void acceptTheCurrentTrade(Trade trade){
         trade.getHalfForUser(getCurrentUser()).setAccepted(true);
     }
+
 }

@@ -310,4 +310,10 @@ public final class DatabaseController implements ControllerInterface{
             e.printStackTrace();
         }
     }
+
+
+    public static <T> void updateDocuments(String type, String id, T data, String path) throws IOException{
+        userDB.getElastic().updateDocument(type, id, data, path);
+        //MasterController.getUserDB().getElastic().updateDocument(type, id, this, "rating");
+    }
 }
